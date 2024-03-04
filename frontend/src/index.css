@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #1b1823;
+  color: rgb(157, 159, 146)
+}
+
+/* input[type="text"] {
+  padding: .3rem .2rem;
+  border: 1px solid rgb(157, 159, 146);
+  border-radius: 10rem;
+}
+
+input[type="text"]:focus {
+  outline-color: #1b1823;
+} */

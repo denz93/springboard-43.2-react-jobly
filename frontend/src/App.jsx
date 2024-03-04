@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import {Outlet, NavLink, Link} from 'react-router-dom'
+import { useAuth } from './hooks'
 function App() {
-  const [count, setCount] = useState(0)
+  const {isLoggedin, user, logout} = useAuth()
+  return <>
+    <header>
+      <nav className='flex gap-4 justify-items-end p-4'>
+        <h1 className='mr-auto font-bold text-2xl'>
+          <Link to={'/'}>
+          JOBLY
+          </Link>
+        </h1>
+        {
+          isLoggedin && <>
+            <NavLink to={'/companies'} className={'group'}><span className='group-[.active]:font-bold'>Companies</span></NavLink>
+            <NavLink to={'/jobs'} className={'group'}><span className='group-[.active]:font-bold'>Jobs</span></NavLink>
+            <NavLink to={'/profile'} className={'group'}><span className='group-[.active]:font-bold'>Profile</span></NavLink>
+            <a href='#' onClick={() => logout()}>Log out {user.username}!</a>
+          </>
+        }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        {
+          !isLoggedin && <>
+            <NavLink to={'/signup'} className={'group'}><span className='group-[.active]:font-bold'>Sign Up</span></NavLink>
+            <NavLink to={'/signin'} className={'group'}><span className='group-[.active]:font-bold'>Log In</span></NavLink>
+          </>
+        }
+
+      </nav>
+    </header>
+    <main>
+      <Outlet/>
+    </main>
+    <footer></footer>
+  </>
 }
 
 export default App
